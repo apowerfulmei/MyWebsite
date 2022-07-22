@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> mei's website </title>
+	<style type="text/css">
+		h1 {
+			font-size: 2em;
+			color: blue;
+			text-align: center;
+		}
+		p {
+			text-align: center;
+		}
+	</style>>
+	<script type="text/javascript"> 
+		var name=""
+			fetch('/get_msg', {
+    				method: 'get'
+			}).then(response=>response.json())
+			.then(data=>
+				{
+					console.log(data.name)
+					name=data.name
+					document.getElementById('nameline').innerHTML=name;
+				})
+		
+
+	</script>
+</head>
+<body>
+	<h1 align="center"> Welcome To Your World! </h1>
+	<p> 姓名： <span id="nameline"> </span> </p>
+	<p> You can tell me something </p>
+	<p> And nobody else could know </p>
+	<form action="/user_post" method="post">
+		<p> 请输入目标用户ID </p>
+		<p><input type="text" name="id" required="required"/> </p>
+		<p><textarea cols="40" rows="13" name="words"> </textarea> </p>
+		<p> <input type="submit" value="submit"> </p>
+	</form>
+</body>
+</html> 

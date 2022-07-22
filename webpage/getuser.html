@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> mei's website </title>
+	<style type="text/css">
+		h1 {
+			font-size: 2em;
+			color: blue;
+			text-align: center;
+		}
+		p {
+			text-align: center;
+		}
+	</style>
+	<script type="text/javascript"> 
+		var userid=""
+		fetch('/get_msg', {
+    			method: 'get'
+		}).then(response=>response.json())
+		.then(data=>
+			{
+				console.log(data)
+				userid=data.id
+				document.getElementById('idline').innerHTML=userid;
+			})
+	</script>
+</head>
+<body>
+	<h1> Very Good!!! </h1>
+	<form action="/user" method="get">
+		<p> <input type="submit" value="get back"> </p>
+	</form>
+	<p> Please keep in mind your ID </p>
+	<p id="idline"> </p> 
+</body>
+</html> 
