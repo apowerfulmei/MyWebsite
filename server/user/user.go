@@ -44,7 +44,9 @@ func login_page(c *gin.Context) {
 	DB.Linkdb()
 	_ID := c.PostForm("id")
 	_psw := c.PostForm("psw")
+	fmt.Println(_psw)
 	msg := DB.GetData(_ID)
+	fmt.Println("aa", msg.Psw)
 	if msg.Psw == _psw {
 		models.LoadHTML(c, getlogin)
 		//显示登录日志
@@ -73,9 +75,11 @@ func getm_page(c *gin.Context) {
 	var DB db.MyDB
 	DB.Linkdb()
 	msg := DB.GetData(_SID)
+	picpath := "./usersdata/" + _SID + "/pic/" + msg.Pic
 	c.JSON(200, gin.H{
 		"name": msg.Name,
 		"id":   msg.Userid,
+		"pic":  models.ReadPic(picpath),
 	})
 }
 func getuser_page(c *gin.Context) {

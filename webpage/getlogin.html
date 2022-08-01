@@ -14,6 +14,7 @@
 	</style>>
 	<script type="text/javascript"> 
 		var name=""
+		//获取用户名等信息
 		fetch('/get_msg', {
     			method: 'get'
 		}).then(response=>response.json())
@@ -22,14 +23,22 @@
 				console.log(data.name)
 				name=data.name
 				document.getElementById('nameline').innerHTML=name;
-			})
-		
+			    bstr = atob(data.pic), // 获得base64解码后的字符串
+			      n = bstr.length, 
+			      u8arr = new Uint8Array(n); 
+			    while (n--) {
+			      u8arr[n] = bstr.charCodeAt(n) 
+			    }
+				const blob = new Blob([u8arr], { type: "image/jpg" })
+				const imageUrl = (window.URL || window.webkitURL).createObjectURL(blob)
+				document.getElementById('headshot').src=imageUrl;
 
+			})	
 	</script>
 </head>
 <body>
 	<h1 align="center"> Welcome To Your World! </h1>
-	<p> <img src="8.jpg" alt="查看图片"/> </p>
+	<p> <img id="headshot" src="" alt="查看图片"/> </p>
 	<p> 姓名： <span id="nameline"> </span> </p>
 	<p> You can tell me something </p>
 	<p> And nobody else could know </p>

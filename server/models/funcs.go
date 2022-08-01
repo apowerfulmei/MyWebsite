@@ -99,3 +99,10 @@ func Tran_file(src string, dst string) {
 	Check(err)
 	io.Copy(dfile, sfile)
 }
+
+func ReadPic(picname string) []byte {
+	file, err := os.Open(picname)
+	Check(err)
+	PicBlob, _ := io.ReadAll(file)
+	return PicBlob
+}

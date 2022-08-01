@@ -58,7 +58,7 @@ func (db *MyDB) GetData(_id string) User {
 	var _psw string
 	var _pic string
 	fmt.Println("id:", _id)
-	rows, err := db.Query("select name,psw from user where id='" + _id + "'")
+	rows, err := db.Query("select name,psw,headshot from user where id='" + _id + "'")
 	models.Check(err)
 	for rows.Next() {
 		err = rows.Scan(&_name, &_psw, &_pic)
