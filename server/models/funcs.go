@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"github.com/gin-gonic/gin"
 	"io"
+	"math/rand"
 	"net"
 	"os"
 	"strings"
@@ -56,6 +57,7 @@ func FormID(rely int) string {
 
 func GetOutBoundIP() string {
 	//获取本机IP
+	//未进行公网部署时需要使用
 	conn, err := net.Dial("udp", "8.8.8.8:53")
 	Check(err)
 	localAddr := conn.LocalAddr().(*net.UDPAddr)
@@ -77,4 +79,23 @@ func Write_userlog(_id string, logs string) {
 	time := time.Now().String()
 	file.WriteString(time + logs + "\n")
 	file.Close()
+}
+
+func Form_rannum(top int) int {
+	//生成一个随机数
+	rand.Seed(time.Now().Unix())
+	return rand.Intn(top)
+}
+
+func Tran_file(src string, dst string) {
+	//进行文件复制
+	sfile, err := os.Open(src)
+	Check(err)
+	_, err = os.Stat(dst)
+	if os.IsNotExist(err) {
+		os.Create(dst)
+	}
+	dfile, err := os.OpenFile(dst, os.O_RDWR, os.ModePerm)
+	Check(err)
+	io.Copy(dfile, sfile)
 }

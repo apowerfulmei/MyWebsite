@@ -14,21 +14,22 @@
 	</style>>
 	<script type="text/javascript"> 
 		var name=""
-			fetch('/get_msg', {
-    				method: 'get'
-			}).then(response=>response.json())
-			.then(data=>
-				{
-					console.log(data.name)
-					name=data.name
-					document.getElementById('nameline').innerHTML=name;
-				})
+		fetch('/get_msg', {
+    			method: 'get'
+		}).then(response=>response.json())
+		.then(data=>
+			{
+				console.log(data.name)
+				name=data.name
+				document.getElementById('nameline').innerHTML=name;
+			})
 		
 
 	</script>
 </head>
 <body>
 	<h1 align="center"> Welcome To Your World! </h1>
+	<p> <img src="8.jpg" alt="查看图片"/> </p>
 	<p> 姓名： <span id="nameline"> </span> </p>
 	<p> You can tell me something </p>
 	<p> And nobody else could know </p>

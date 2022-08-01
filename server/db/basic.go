@@ -12,6 +12,7 @@ type User struct {
 	Name   string //姓名
 	Psw    string //密码
 	Userid string //用户唯一id
+	Pic    string
 }
 type MyDB struct {
 	*sql.DB
@@ -46,8 +47,8 @@ func (db *MyDB) Linkdb() {
 func (db *MyDB) InsertData(umsg User) {
 	//插入用户注册信息
 	_, err := db.Exec("insert into "+tbname+
-		"(id,name,psw) "+
-		"values(?,?,?)", umsg.Userid, umsg.Name, umsg.Psw)
+		"(id,name,psw,headshot) "+
+		"values(?,?,?,?)", umsg.Userid, umsg.Name, umsg.Psw, umsg.Pic)
 	models.Check(err)
 	fmt.Println("数据插入成功")
 }
@@ -55,13 +56,14 @@ func (db *MyDB) InsertData(umsg User) {
 func (db *MyDB) GetData(_id string) User {
 	var _name string
 	var _psw string
+	var _pic string
 	fmt.Println("id:", _id)
 	rows, err := db.Query("select name,psw from user where id='" + _id + "'")
 	models.Check(err)
 	for rows.Next() {
-		err = rows.Scan(&_name, &_psw)
+		err = rows.Scan(&_name, &_psw, &_pic)
 	}
-	return FormUser(_name, _psw, _id)
+	return FormUser(_name, _psw, _id, _pic)
 }
 
 func (db *MyDB) closedb() {
@@ -70,10 +72,11 @@ func (db *MyDB) closedb() {
 	fmt.Println("Database is closed!")
 }
 
-func FormUser(_name string, _psw string, _ID string) User {
+func FormUser(_name string, _psw string, _ID string, _Pic string) User {
 	var msg User
 	msg.Userid = _ID
 	msg.Psw = _psw
 	msg.Name = _name
+	msg.Pic = _Pic
 	return msg
 }

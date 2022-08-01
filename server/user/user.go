@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 var welcome = ".\\webpage\\welcome.html"
@@ -85,14 +86,20 @@ func getuser_page(c *gin.Context) {
 	//获取用户传输的信息
 	_name := c.PostForm("name")
 	_psw := c.PostForm("psw")
+	_pic := "1.jpg"
 	ID := models.FormID(db.TotalUser)
 	//存储在map中
 	UserMap[c.ClientIP()] = ID
 	//存储到数据库中
-	DB.InsertData(db.FormUser(_name, _psw, ID))
+	DB.InsertData(db.FormUser(_name, _psw, ID, _pic))
 	db.TotalUser += 1
 	//在user/users/目录下为用户创建数据文件夹
 	models.Init_user_dir(ID)
+	//为用户随机分配一个头像
+	src_name := "./usersdata/default_pic/" + strconv.Itoa(models.Form_rannum(6)) + ".jpg"
+	dst_name := "./usersdata/" + ID + "/pic/" + _pic
+	models.Tran_file(src_name, dst_name)
+
 }
 func User(e *gin.Engine) {
 	//初始界面
