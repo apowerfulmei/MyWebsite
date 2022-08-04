@@ -14,6 +14,7 @@ var welcome = ".\\webpage\\welcome.html"
 var register = ".\\webpage\\register.html"
 var getuser = ".\\webpage\\getuser.html"
 var getlogin = ".\\webpage\\getlogin.html"
+var changemsg = ".\\webpage\\changemsg.html"
 
 var UserMap = make(map[string]string) //将用户IP与id相联系
 
@@ -105,6 +106,10 @@ func getuser_page(c *gin.Context) {
 	models.Tran_file(src_name, dst_name)
 
 }
+func cham_page(c *gin.Context) {
+	//用户信息修改
+	models.LoadHTML(c, changemsg)
+}
 func User(e *gin.Engine) {
 	//初始界面
 	e.GET("/user", welcome_page)
@@ -122,4 +127,5 @@ func LoginUser(e *gin.Engine) {
 	e.POST("/user_log", login_page)
 	e.POST("/user_post", post_page)
 	e.GET("/get_msg", getm_page)
+	e.GET("/change_msg", cham_page)
 }

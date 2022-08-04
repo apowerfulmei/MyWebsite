@@ -2,16 +2,7 @@
 <html>
 <head>
 	<title> mei's website </title>
-	<style type="text/css">
-		h1 {
-			font-size: 2em;
-			color: blue;
-			text-align: center;
-		}
-		p {
-			text-align: center;
-		}
-	</style>>
+
 	<script type="text/javascript"> 
 		var name=""
 		//获取用户名等信息
@@ -20,9 +11,8 @@
 		}).then(response=>response.json())
 		.then(data=>
 			{
-				console.log(data.name)
-				name=data.name
-				document.getElementById('nameline').innerHTML=name;
+				document.getElementById('nameline').innerHTML=data.name;
+				document.getElementById('idline').innerHTML=data.id;
 			    bstr = atob(data.pic), // 获得base64解码后的字符串
 			      n = bstr.length, 
 			      u8arr = new Uint8Array(n); 
@@ -37,17 +27,18 @@
 	</script>
 </head>
 <body>
-	<h1 align="center"> Welcome To Your World! </h1>
-	<a href="/change_msg">
+	<h1> Come Here To Change! </h1>
 	<p><img id="headshot" src="" alt="查看图片"/></p>
 	<p> 姓名： <span id="nameline"> </span> </p>	
-	</a>
-	<p> You can tell me something </p>
-	<p> And nobody else could know </p>
-	<form action="/user_post" method="post">
-		<p> 请输入目标用户ID </p>
-		<p><input type="text" name="id" required="required"/> </p>
-		<p><textarea cols="40" rows="13" name="words"> </textarea> </p>
+	<p> ID： <span id="idline"> </span> </p>	
+	<p> You can change your message blow. </p>
+	<form action="/change_msg" method="post">
+		<p> 昵称：
+			<input placeholder="input your new name" type="text" name="name" />
+		</p>
+		<p>			新头像：
+			<input type="file" name="pic" />
+		</p>
 		<p> <input type="submit" value="submit"> </p>
 	</form>
 </body>
